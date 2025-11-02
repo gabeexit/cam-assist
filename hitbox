@@ -1,0 +1,53 @@
+-- Serviços
+local Workspace = game:GetService("Workspace")
+
+-- Função para criar a ExpandedHitbox
+local function criarHitbox(bola)
+	if bola:FindFirstChild("ExpandedHitbox") then return end -- Evita duplicar
+
+	local hitbox = Instance.new("Part")
+	hitbox.Name = "ExpandedHitbox"
+	hitbox.Anchored = false
+	hitbox.Archivable = true
+	hitbox.CanCollide = false
+	hitbox.Locked = false
+	hitbox.Size = Vector3.new(7, 7, 7)
+	hitbox.Massless = true
+	hitbox.Transparency = 0.5
+	hitbox.Color = Color3.fromRGB(255, 0, 0) -- opcional (só pra visualizar)
+
+	-- Coloca dentro da bola detectada
+	hitbox.Parent = bola
+
+	-- Faz o hitbox seguir a bola (WeldConstraint)
+	local primary = nil
+	if bola:IsA("Model") and bola.PrimaryPart then
+		primary = bola.PrimaryPart
+	elseif bola:IsA("BasePart") then
+		primary = bola
+	else
+		primary = bola:FindFirstChildWhichIsA("BasePart")
+	end
+
+	if primary then
+		hitbox.CFrame = primary.CFrame
+		local weld = Instance.new("WeldConstraint")
+		weld.Part0 = hitbox
+		weld.Part1 = primary
+		weld.Parent = hitbox
+	end
+end
+
+-- Detectar novas CLIENT_BALLs
+Workspace.ChildAdded:Connect(function(child)
+	if string.find(child.Name, "CLIENT_BALL_") then
+		criarHitbox(child)
+	end
+end)
+
+-- Também pega as que já existirem
+for _, child in pairs(Workspace:GetChildren()) do
+	if string.find(child.Name, "CLIENT_BALL_") then
+		criarHitbox(child)
+	end
+end
