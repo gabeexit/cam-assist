@@ -11,7 +11,7 @@ local function criarHitbox(bola)
 	hitbox.Archivable = true
 	hitbox.CanCollide = false
 	hitbox.Locked = false
-	hitbox.Size = Vector3.new(5, 5, 5)
+	hitbox.Size = Vector3.new(4, 4, 4)
 	hitbox.Massless = true
 	hitbox.Transparency = 1 -- Invisível
 	hitbox.Parent = bola
