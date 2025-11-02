@@ -13,7 +13,7 @@ local function criarHitbox(bola)
 	hitbox.Locked = false
 	hitbox.Size = Vector3.new(7, 7, 7)
 	hitbox.Massless = true
-	hitbox.Transparency = 0.5
+	hitbox.Transparency = 0.0
 	hitbox.Color = Color3.fromRGB(255, 0, 0) -- opcional (só pra visualizar)
 
 	-- Coloca dentro da bola detectada
