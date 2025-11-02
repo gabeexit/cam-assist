@@ -1,0 +1,33 @@
+--// LocalScript
+-- Coloque em StarterCharacterScripts
+
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local humanoid = char:WaitForChild("Humanoid")
+local rootPart = char:WaitForChild("HumanoidRootPart")
+local camera = workspace.CurrentCamera
+
+local jumping = false
+
+-- Função que alinha o boneco pra frente da câmera
+local function AlignToCamera()
+	local camCF = camera.CFrame
+	local lookVector = Vector3.new(camCF.LookVector.X, 0, camCF.LookVector.Z).Unit
+	local newCFrame = CFrame.lookAt(rootPart.Position, rootPart.Position + lookVector)
+	rootPart.CFrame = newCFrame
+end
+
+-- Detecta início do pulo instantaneamente
+humanoid:GetPropertyChangedSignal("Jump"):Connect(function()
+	if humanoid.Jump and not jumping then
+		jumping = true
+		AlignToCamera()
+	end
+end)
+
+-- Detecta quando voltar ao chão
+humanoid.StateChanged:Connect(function(_, new)
+	if new == Enum.HumanoidStateType.Landed then
+		jumping = false
+	end
+end)
