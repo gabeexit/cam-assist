@@ -11,12 +11,9 @@ local function criarHitbox(bola)
 	hitbox.Archivable = true
 	hitbox.CanCollide = false
 	hitbox.Locked = false
-	hitbox.Size = Vector3.new(7, 7, 7)
+	hitbox.Size = Vector3.new(8, 8, 8)
 	hitbox.Massless = true
-	hitbox.Transparency = 0.0
-	hitbox.Color = Color3.fromRGB(255, 0, 0) -- opcional (só pra visualizar)
-
-	-- Coloca dentro da bola detectada
+	hitbox.Transparency = 1 -- Invisível
 	hitbox.Parent = bola
 
 	-- Faz o hitbox seguir a bola (WeldConstraint)
