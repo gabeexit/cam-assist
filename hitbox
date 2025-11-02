@@ -1,4 +1,4 @@
--- Serviços
+--- Serviços
 local Workspace = game:GetService("Workspace")
 
 -- Função para criar a ExpandedHitbox
